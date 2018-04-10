@@ -11,6 +11,7 @@ import fr.jpa.Emprunt;
 @Table(name="banque")
 public class Banque {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "NOM", length = 50, nullable = false)
 	private String nom;
@@ -20,6 +21,10 @@ public class Banque {
 	
 	public Banque(){
 		clients = new HashSet<Client>();
+	}
+	
+	public Banque(String nom){
+		this.nom = nom;
 	}
 	
 	public Integer getId() {

@@ -19,7 +19,7 @@ public class Client {
 	private LocalDate dateNaissance;
 	
 	@Embedded
-	private Adresse Adresse;
+	private Adresse adresse;
 	
 	@ManyToOne
 	@JoinColumn(name="ID_BANK")
@@ -31,6 +31,13 @@ public class Client {
 	inverseJoinColumns = @JoinColumn(name = "ID_COM",  referencedColumnName="ID")
 			)
 	private Set<Compte> comptes;
+	
+	public Client(String nom, String prenom, LocalDate dateNaissance, Adresse adresse){
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateNaissance = dateNaissance;
+		this.adresse = adresse;
+	}
 	
 	public Integer getId() {
 		return id;
@@ -73,11 +80,11 @@ public class Client {
 	}
 
 	public Adresse getAdresse() {
-		return Adresse;
+		return adresse;
 	}
 
 	public void setAdresse(Adresse adresse) {
-		Adresse = adresse;
+		this.adresse = adresse;
 	}
 	
 	public Set<Compte> getComptes() {

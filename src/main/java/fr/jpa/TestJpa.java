@@ -1,14 +1,26 @@
 package fr.jpa;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import fr.banque.Adresse;
+import fr.banque.AssuranceVie;
+import fr.banque.Banque;
+import fr.banque.Client;
+import fr.banque.Compte;
+import fr.banque.LivretA;
+import fr.banque.Virement;
 
 public class TestJpa {
 	private static final Logger LOG = LoggerFactory.getLogger(TestJpa.class);
@@ -16,41 +28,53 @@ public class TestJpa {
 	public static void main(String[] args) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("banque");
 		EntityManager em = emf.createEntityManager();
-
-		/*Livre l1 = new Livre();
 		
-		l1 = em.find(Livre.class, 1);
-		if (l1 != null){
-			LOG.info(l1.getTitre() + " de " + l1.getAuteur());
-		}*/
-
-		/*l1.setId(6);
-		l1.setTitre("Le Seigneur des Anneaux: La communaut� de l'Anneau");
-		l1.setAuteur("J.R.R Tolkien");
-		em.persist(l1);*/
+		EntityTransaction et = em.getTransaction();
+		et.begin();
 		
+		Client cl1 = new Client("Jean", "De Lattre", LocalDate.of(1887, 8, 26), new Adresse(210, "Cours de la Libération", 38100, "GRENOBLE"));
+		Client cl2 = new Client("Charles", "De Gaulle", LocalDate.of(1889, 3, 04), new Adresse(16, "Rue de la Joie", 75500, "PARIS"));	
+		
+		Banque b1 = new Banque("Crédit Dauphinois");
 			
-		/*TypedQuery<Emprunt> query = em.createQuery("SELECT a FROM Emprunt a WHERE a.id=:reference",
-				Emprunt.class);
-		query.setParameter("reference", 1);
+		Compte com1 = new Compte("14556645466AMD", 2000.50);	
+		AssuranceVie av1 = new AssuranceVie("251556LIFE", 10000.0, LocalDate.of(2010, 7, 11), 50.0); 
+		LivretA la1 = new LivretA("155412A", 5000.0, 2.0);
+				
+		Set<Compte> listCompte = new HashSet<>();
+		Set<Compte> listCompteClient = new HashSet<>();
+		Set<Virement> listVir = new HashSet<>();		
 		
-		if(query !=null) {
-			List<Emprunt> emprunts = query.getResultList();
-			for(Emprunt e: emprunts) {
-				LOG.info(e.toString());
-			}
-		}
+		Virement vir1 = new Virement(LocalDateTime.of(2011, 12, 24, 10, 1), 100.0, "Cadeau de Noël", "Papa");
 		
-		TypedQuery<Client> query2 = em.createQuery("SELECT a FROM Client a WHERE a.id=:reference",
-				Client.class);
-		query2.setParameter("reference", 1);
+		// Attribution de la banque aux clients 1 et 2
+		cl1.setBanque(b1);
+		cl2.setBanque(b1);
 		
-		if(query2 !=null) {
-			List<Client> Clients = query2.getResultList();
-			for(Client e: Clients) {
-				LOG.info(e.toString());
-			}
-		}*/
+		// Attribution de compte 1 aux clients 1 et 2
+		listCompte.add(com1);
+		cl1.setComptes(listCompte);
+		cl2.setComptes(listCompte);
 		
+		// Rajout des comptes assuranceVie 1 et livretA 1 au client 1
+		listCompteClient.add(av1);
+		listCompteClient.add(la1);
+		cl1.setComptes(listCompteClient);
+		
+		// Rajout du virement 1 au  compte livretA 1
+		listVir.add(vir1);
+		la1.setVirement(listVir);
+		vir1.setCompteOp(la1);
+		
+		em.persist(b1);
+		em.persist(la1);
+		em.persist(av1);
+		em.persist(vir1);
+		em.persist(cl1);
+		em.persist(cl2);
+		em.persist(com1);
+		
+		et.commit();
+		em.close();
 	}
 }

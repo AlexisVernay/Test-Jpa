@@ -47,6 +47,6 @@ public class Client {
 	}
 	
 	public String toString(){
-		return "Nom: " + getNom() + ", Prénom: " + getprenom() + "\n" + emprunts.toString();
+		return "Nom: " + getNom() + ", Prï¿½nom: " + getprenom() + "\n" + emprunts.toString();
 	}
 }

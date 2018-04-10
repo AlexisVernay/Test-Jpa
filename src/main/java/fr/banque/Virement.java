@@ -1,5 +1,7 @@
 package fr.banque;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,11 @@ public class Virement extends Operation {
 	@ManyToOne
 	@JoinColumn(name="ID_COMPTE")
 	private Compte compteOp;
+	
+	public Virement(LocalDateTime date, Double montant, String motif, String beneficiaire) {
+		super(date, montant, motif);
+		this.beneficiaire = beneficiaire;
+	}
 	
 	public String getBeneficiaire() {
 		return beneficiaire;
@@ -27,7 +34,7 @@ public class Virement extends Operation {
 	public void setCompteOp(Compte compteOp) {
 		this.compteOp = compteOp;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Virement [beneficiaire=" + beneficiaire + "]";

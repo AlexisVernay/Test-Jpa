@@ -10,7 +10,7 @@ public class Adresse {
 	@Column(name = "RUE", length = 100, nullable = false)
 	private String rue;
 	@Column(name = "CODE_POSTAL", length = 10, nullable = false)
-	private int codePostam;
+	private int codePostal;
 	@Column(name = "VILLE", length = 50, nullable = false)
 	private String ville;
 
@@ -18,7 +18,13 @@ public class Adresse {
 		
 	}
 	
-
+	public Adresse(int numero, String rue, int codePostal, String ville){
+		this.numero = numero;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+	}
+	
 	public int getNumero() {
 		return numero;
 	}
@@ -35,12 +41,12 @@ public class Adresse {
 		this.rue = rue;
 	}
 
-	public int getCodePostam() {
-		return codePostam;
+	public int getCodePostal() {
+		return codePostal;
 	}
 
-	public void setCodePostam(int codePostam) {
-		this.codePostam = codePostam;
+	public void setCodePostal(int codePostal) {
+		this.codePostal = codePostal;
 	}
 
 	public String getVille() {
@@ -54,7 +60,7 @@ public class Adresse {
 
 	@Override
 	public String toString() {
-		return "Adresse [ numero=" + numero + ", rue=" + rue + ", codePostam=" + codePostam + ", ville="
+		return "Adresse [ numero=" + numero + ", rue=" + rue + ", codePostal=" + codePostal + ", ville="
 				+ ville + "]";
 	}
 	

@@ -21,6 +21,11 @@ public class Compte {
 	@ManyToMany(mappedBy = "comptes")
 	private Set<Client> clients;
 	
+	public Compte(String numero, Double solde){
+		this.numero = numero;
+		this.solde = solde;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

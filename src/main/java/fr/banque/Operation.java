@@ -18,6 +18,12 @@ public class Operation {
 	@Column(name = "MOTIF", length = 300, nullable = false)
 	private String motif;
 	
+	public Operation(LocalDateTime date, Double montant, String motif) {
+		this.date = date;
+		this.montant = montant;
+		this.motif = motif;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
