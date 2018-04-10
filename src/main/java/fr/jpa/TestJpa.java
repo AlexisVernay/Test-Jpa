@@ -14,15 +14,15 @@ public class TestJpa {
 	private static final Logger LOG = LoggerFactory.getLogger(TestJpa.class);
 	
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Test");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("banque");
 		EntityManager em = emf.createEntityManager();
 
-		Livre l1 = new Livre();
+		/*Livre l1 = new Livre();
 		
 		l1 = em.find(Livre.class, 1);
 		if (l1 != null){
 			LOG.info(l1.getTitre() + " de " + l1.getAuteur());
-		}
+		}*/
 
 		/*l1.setId(6);
 		l1.setTitre("Le Seigneur des Anneaux: La communauté de l'Anneau");
@@ -30,7 +30,7 @@ public class TestJpa {
 		em.persist(l1);*/
 		
 			
-		TypedQuery<Emprunt> query = em.createQuery("SELECT a FROM Emprunt a WHERE a.id=:reference",
+		/*TypedQuery<Emprunt> query = em.createQuery("SELECT a FROM Emprunt a WHERE a.id=:reference",
 				Emprunt.class);
 		query.setParameter("reference", 1);
 		
@@ -50,7 +50,7 @@ public class TestJpa {
 			for(Client e: Clients) {
 				LOG.info(e.toString());
 			}
-		}
+		}*/
 		
 	}
 }
